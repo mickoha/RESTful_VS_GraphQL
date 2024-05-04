@@ -1,0 +1,70 @@
+enum HuoneTyyppi {
+    tyotila
+    neuvottelu
+}
+
+type Osaaminen {
+    id: Int,
+    osaaminen: String
+}
+
+type Tyontekija {
+    id: Int
+    nimi: String
+    puhelinnumero: String
+    sahkoposti: String
+    osaaminen: [Osaaminen]
+    asiakkaat: [Asiakas]
+}
+
+type Query {
+    tyontekijat: [Tyontekija]
+    osastot: [Osasto]
+    huoneet(huoneId: Int): [Huone]
+    autopaikat: [Autopaikka]
+    asiakkaat: [Asiakas]
+}
+
+type Toimisto {
+    id: Int
+    nimi: String
+    kaupunki: String
+    maa: String
+    yritys_id: Int
+}
+
+type Osasto {
+    id: Int
+    nimi: String
+    toimisto_id: Int
+    yhteyshenkilo: Tyontekija
+}
+
+type Huone {
+    id: Int
+    tyyppi: HuoneTyyppi
+    osasto: Osasto
+    tyontekijat: [Tyontekija]
+}
+
+type Autopaikka {
+    id: Int
+    toimisto: Toimisto
+    tyontekija: Tyontekija
+}
+
+type Asiakas {
+    id: Int
+    nimi: String
+    puhelinnumero: String
+    toimiala: String
+    osaamisvaatimukset: [Osaaminen]
+}
+
+
+
+
+type Mutation {
+    lisaaTyontekija(nimi: String, puhelinnumero: String, sahkoposti: String): Tyontekija
+    muokkaaTyontekija(id: Int, nimi: String, puhelinnumero: String, sahkoposti: String): Tyontekija
+}
